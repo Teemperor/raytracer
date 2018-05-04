@@ -7,6 +7,7 @@
 #include "lib/PointLight.h"
 #include "lib/TextureRect.h"
 #include "lib/Mirror.h"
+#include "lib/Sphere.h"
 
 int main()
 {
@@ -22,8 +23,6 @@ int main()
   L.add(&C2);
   Circle C3(Vec3(50, 0, 50), Vec3(0, 1, 0), Color(0, 0, 111), 50);
   L.add(&C3);
-  Circle C4(Vec3(50, 20, 50), Vec3(0, 1, 0), Color(0, 22, 181), 20);
-  L.add(&C4);
   //Circle C5(Vec3(20, 50, 50), Vec3(1, 0, 0), Color(111, 22, 181), 10);
   //L.add(&C5);
   TextureRect R1(Vec3(20, 50, 50), Vec3(1, 0, 0), "test.png", 0.8f);
@@ -31,11 +30,13 @@ int main()
 
   L.add(new Mirror(Vec3(50, 10, 50), Vec3(0, 1, 0), {60, 60}));
 
+  L.add(new Sphere(Vec3(60, 50, 20), 10, Color(22, 44, 11)));
+
   //Plane P1(, Color(0, 0, 22));
   //L.add(&P1);
 
   PointLight *Light;
-  L.add(Light = new PointLight(Vec3(50, 50, 50), 88));
+  L.add(Light = new PointLight(Vec3(70, 70, 70), 88));
 
   Raytracer Tracer(L);
   Tracer.setPos(Vec3(800, 800, 800));
@@ -54,7 +55,7 @@ int main()
 
     {
       auto P = Light->getCenter();
-      P.setX(OrigLightX + std::cos(Counter) * 40);
+      P.setX(OrigLightX + std::cos(Counter) * 20);
       Light->setCenter(P);
     }
 
