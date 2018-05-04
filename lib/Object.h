@@ -5,11 +5,13 @@
 #include "Ray.h"
 #include "Hit.h"
 
+class Level;
+
 class Object {
 
 public:
   virtual ~Object() = default;
-  virtual Hit intersect(const Ray &R) const = 0;
+  virtual Hit intersect(const Ray &R, const Level &L) const = 0;
 
 };
 

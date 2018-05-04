@@ -22,10 +22,12 @@ public:
     Lights.push_back(L);
   }
 
-  Hit intersect(const Ray &R) const {
+  Hit intersect(const Ray &R, const Object *Ignore = nullptr) const {
     Hit Result;
     for (auto &O : Objects) {
-      auto I = O->intersect(R);
+      if (O == Ignore)
+        continue;
+      auto I = O->intersect(R, *this);
       Vec3::Unit NewDistance = I.getPos().distance(R.getStart());
       Vec3::Unit OldDistance = Result.getPos().distance(R.getStart());
       if (I.valid() && (!Result.valid() || NewDistance < OldDistance)) {
@@ -44,7 +46,7 @@ public:
     std::vector<Hit> Result;
 
     for (auto &O : Objects) {
-      auto I = O->intersect(R);
+      auto I = O->intersect(R, *this);
       Vec3::Unit NewDistance = I.getPos().distance(R.getStart());
       if (I.valid()) {
         SortedResult.emplace_back(NewDistance, I);

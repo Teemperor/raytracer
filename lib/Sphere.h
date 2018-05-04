@@ -7,7 +7,7 @@
 class Sphere : public Object {
 
 public:
-  Hit intersect(const Ray &R) const override {
+  Hit intersect(const Ray &R, const Level &L) const override {
     return Hit();
   }
 };

@@ -35,8 +35,8 @@ public:
     setSize(loadImage(Path));
   }
 
-  Hit intersect(const Ray &R) const override {
-    Hit I = Rectangle::intersect(R);
+  Hit intersect(const Ray &R, const Level &L) const override {
+    Hit I = Rectangle::intersect(R, L);
     if (I.valid()) {
       const Vec3 FromCenter = I.getPos() - getCenter();
 

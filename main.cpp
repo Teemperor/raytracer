@@ -6,6 +6,7 @@
 #include "lib/Raytracer.h"
 #include "lib/PointLight.h"
 #include "lib/TextureRect.h"
+#include "lib/Mirror.h"
 
 int main()
 {
@@ -27,6 +28,9 @@ int main()
   //L.add(&C5);
   TextureRect R1(Vec3(20, 50, 50), Vec3(1, 0, 0), "test.png", 0.8f);
   L.add(&R1);
+
+  L.add(new Mirror(Vec3(50, 10, 50), Vec3(0, 1, 0), {60, 60}));
+
   //Plane P1(, Color(0, 0, 22));
   //L.add(&P1);
 
@@ -37,8 +41,6 @@ int main()
   Tracer.setPos(Vec3(800, 800, 800));
 
   Vec3 ViewDirection(-1, -1, -1);
-
-  double ViewAngle = -M_PI;
 
   double Counter = 0;
 

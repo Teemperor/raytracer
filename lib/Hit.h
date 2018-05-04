@@ -16,7 +16,7 @@ class Hit {
 public:
   Hit() = default;
   Hit(Vec3 Pos, Vec3 Normal, Color C, const Object *Obj)
-      : Pos(Pos), Normal(Normal), C(C), Obj(Obj) {
+      : Pos(Pos), Normal(Normal.normalize()), C(C), Obj(Obj) {
     Valid = true;
   }
   static Hit missed() {

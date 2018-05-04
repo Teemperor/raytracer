@@ -22,8 +22,8 @@ public:
     Height = Size.second;
   }
 
-  Hit intersect(const Ray &R) const override {
-    Hit I = P.intersect(R);
+  Hit intersect(const Ray &R, const Level &L) const override {
+    Hit I = P.intersect(R, L);
     if (I.valid()) {
       I.setHitObject(this);
 

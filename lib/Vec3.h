@@ -93,5 +93,8 @@ public:
 
 };
 
+inline Vec3 operator*(Vec3::Unit F, const Vec3 &A) {
+  return A * F;
+}
 
 #endif //RAYTRACER_VEC3_H
