@@ -15,6 +15,6 @@ void PointLight::processHit(Hit &H, const Level& L) const {
   auto Strength = 1 - Distance / Radius;
   if (Strength > 0 && Strength < 1) {
     Color UsedColor = C * Strength;
-    H.setColor(H.getColor() + UsedColor);
+    H.addLight(UsedColor);
   }
 }

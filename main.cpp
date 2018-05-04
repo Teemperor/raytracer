@@ -8,6 +8,7 @@
 #include "lib/TextureRect.h"
 #include "lib/Mirror.h"
 #include "lib/Sphere.h"
+#include "lib/GlobalLight.h"
 
 int main()
 {
@@ -17,29 +18,43 @@ int main()
 
   Level L;
 
-  Circle C1(Vec3(50, 50, 0), Vec3(0, 0, 1), Color(111, 0, 0), 50);
-  L.add(&C1);
-  Circle C2(Vec3(0, 50, 50), Vec3(1, 0, 0), Color(0, 111, 0), 50);
-  L.add(&C2);
-  Circle C3(Vec3(50, 0, 50), Vec3(0, 1, 0), Color(0, 0, 111), 50);
-  L.add(&C3);
-  //Circle C5(Vec3(20, 50, 50), Vec3(1, 0, 0), Color(111, 22, 181), 10);
-  //L.add(&C5);
-  TextureRect R1(Vec3(20, 50, 50), Vec3(1, 0, 0), "test.png", 0.8f);
-  L.add(&R1);
-
+//  L.add(new Circle(Vec3(50, 50, 0), Vec3(0, 0, 1), Color(111, 0, 0), 50));
+//  L.add(new Circle(Vec3(0, 50, 50), Vec3(1, 0, 0), Color(0, 111, 0), 50));
+//  L.add(new Circle(Vec3(50, 0, 50), Vec3(0, 1, 0), Color(0, 0, 111), 50));
+  L.add(new TextureRect(Vec3(20, 50, 50), Vec3(1, 0, 0), "test.png", 0.8f));
   L.add(new Mirror(Vec3(50, 10, 50), Vec3(0, 1, 0), {60, 60}));
 
-  L.add(new Sphere(Vec3(60, 50, 20), 10, Color(22, 44, 11)));
 
-  //Plane P1(, Color(0, 0, 22));
-  //L.add(&P1);
+  std::vector<Sphere *> Spheres;
+
+  const int Field = 1900;
+  for (int i = 0; i < 220; ++i) {
+    int X = rand() % Field - Field/2;
+    int Y = rand() % Field - Field/2;
+    int Rad = rand() % 100;
+    Sphere *S = new Sphere(Vec3(X, Y, Rad), Rad, Color(rand() % 255, rand() % 255, rand() % 255)) ;
+    bool Collides = false;
+    for (auto &OS : Spheres) {
+      if (OS->collides(*S)) {
+        Collides = true;
+        break;
+      }
+    }
+    if (!Collides) {
+      Spheres.push_back(S);
+      L.add(S);
+    }
+  }
+
+
+  L.add(new Plane(Vec3(0, 0, 0), Vec3(0, 0, 1), Color(200, 20, 0)));
 
   PointLight *Light;
-  L.add(Light = new PointLight(Vec3(70, 70, 70), 88));
+  L.add(Light = new PointLight(Vec3(70, 70, 570), 88));
+  L.add(new GlobalLight(Color(77, 77, 77)));
 
   Raytracer Tracer(L);
-  Tracer.setPos(Vec3(800, 800, 800));
+  Tracer.setPos(Vec3(3800, 3800, 3800));
 
   Vec3 ViewDirection(-1, -1, -1);
 

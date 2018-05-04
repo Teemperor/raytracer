@@ -16,6 +16,10 @@ public:
       : Center(Center), Radius(Radius), C(C) {
   }
 
+  bool collides(const Sphere &S) const {
+    return Center.distance(S.Center) <= S.Radius + Radius;
+  }
+
   Hit intersect(const Ray &R, const Level &) const override {
     const Vec3 L = R.getDirection();
     const Vec3 O = R.getStart();

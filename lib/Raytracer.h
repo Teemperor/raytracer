@@ -64,7 +64,7 @@ public:
           Hit H = L.intersect(R);
           if (H.valid()) {
             L.lightHit(H);
-            Buffer[x + y * Width] = H.getColor();
+            Buffer[x + y * Width] = H.getFinalColor();
           }
         }
       });

@@ -10,6 +10,7 @@ class Hit {
   Vec3 Pos;
   Vec3 Normal;
   Color C;
+  Color Light;
   const Object *Obj;
   bool Valid = false;
 
@@ -29,6 +30,14 @@ public:
 
   const Color &getColor() const {
     return C;
+  }
+
+  void addLight(Color L) {
+    Light = Light + L;
+  }
+
+  Color getFinalColor() const {
+    return C + Light;
   }
 
   const Vec3 &getPos() const {
