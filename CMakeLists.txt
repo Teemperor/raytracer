@@ -15,5 +15,5 @@ else()
   include_directories(${SFML_INCLUDE_DIR})
 endif()
 
-add_executable(raytracer main.cpp lib/Object.cpp lib/Object.h lib/Ray.cpp lib/Ray.h lib/Sphere.cpp lib/Sphere.h lib/Level.cpp lib/Level.h lib/Vec3.cpp lib/Vec3.h lib/Plane.cpp lib/Plane.h lib/Circle.cpp lib/Circle.h lib/Color.cpp lib/Color.h lib/Hit.cpp lib/Hit.h lib/Raytracer.cpp lib/Raytracer.h lib/Light.cpp lib/Light.h lib/PointLight.cpp lib/PointLight.h lib/TextureRect.cpp lib/TextureRect.h)
+add_executable(raytracer main.cpp lib/Object.cpp lib/Object.h lib/Ray.cpp lib/Ray.h lib/Sphere.cpp lib/Sphere.h lib/Level.cpp lib/Level.h lib/Vec3.cpp lib/Vec3.h lib/Plane.cpp lib/Plane.h lib/Circle.cpp lib/Circle.h lib/Color.cpp lib/Color.h lib/Hit.cpp lib/Hit.h lib/Raytracer.cpp lib/Raytracer.h lib/Light.cpp lib/Light.h lib/PointLight.cpp lib/PointLight.h lib/TextureRect.cpp lib/TextureRect.h lib/Rectangle.cpp lib/Rectangle.h)
 target_link_libraries(raytracer ${SFML_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
