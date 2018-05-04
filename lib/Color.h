@@ -33,6 +33,10 @@ public:
                  clamp((int)G + (int)C.G),
                  clamp((int)B + (int)C.B), A);
   }
+
+  uint8_t getAlpha() const {
+    return A;
+  }
 };
 
 

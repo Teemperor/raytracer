@@ -5,6 +5,7 @@
 #include "lib/Circle.h"
 #include "lib/Raytracer.h"
 #include "lib/PointLight.h"
+#include "lib/TextureRect.h"
 
 int main()
 {
@@ -22,9 +23,11 @@ int main()
   L.add(&C3);
   Circle C4(Vec3(50, 20, 50), Vec3(0, 1, 0), Color(0, 22, 181), 20);
   L.add(&C4);
-  Circle C5(Vec3(20, 50, 50), Vec3(1, 0, 0), Color(111, 22, 181), 10);
-  L.add(&C5);
-  //Plane P1(Vec3(20, 20, 20), Vec3(1, 1, 1), Color(0, 0, 22));
+  //Circle C5(Vec3(20, 50, 50), Vec3(1, 0, 0), Color(111, 22, 181), 10);
+  //L.add(&C5);
+  TextureRect R1(Vec3(20, 50, 50), Vec3(1, 0, 0), "test.png", 0.8f);
+  L.add(&R1);
+  //Plane P1(, Color(0, 0, 22));
   //L.add(&P1);
 
   PointLight *Light;
@@ -49,7 +52,7 @@ int main()
 
     {
       auto P = Light->getCenter();
-      P.setX(OrigLightX + std::cos(Counter) * 20);
+      P.setX(OrigLightX + std::cos(Counter) * 40);
       Light->setCenter(P);
     }
 

@@ -18,10 +18,27 @@ public:
     return X * Other.X + Y * Other.Y + Z * Other.Z;
   }
 
+  Vec3 getRandomOther() const {
+    if (std::abs(normalize().getX() - 1) < 0.1f) {
+      return Vec3(0, 1, 0);
+    } else {
+      return Vec3(1, 0, 0);
+    }
+  }
+
   Vec3 crossProduct(const Vec3 &B) const {
     return Vec3(Y * B.Z - Z * B.Y,
                 Z * B.X - X * B.Z,
                 X * B.Y - Y * B.X);
+  }
+
+  Vec3 projection(const Vec3 &B) const {
+    Vec3::Unit a1 = dot(B.normalize());
+    return B.normalize() * a1;
+  }
+
+  Vec3 rejection(const Vec3 &B) const {
+    return *this - projection(B);
   }
 
   Unit distance(const Vec3 &O) const {
