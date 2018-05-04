@@ -36,7 +36,7 @@ int main()
   Raytracer Tracer(L);
   Tracer.setPos(Vec3(800, 800, 800));
 
-  Vec3 ViewDirection(-1, -1.1, -1.15);
+  Vec3 ViewDirection(-1, -1, -1);
 
   double ViewAngle = -M_PI;
 
@@ -63,7 +63,8 @@ int main()
     std::vector<Color> Buffer;
 
     Buffer.resize(Width * Height, Color(0, 0, 0));
-    Tracer.trace(Buffer, Width, Height);
+    Tracer.setRenderSize(Width, Height);
+    Tracer.trace(Buffer);
 
     sf::Image Img;
     Img.create(Width, Height, reinterpret_cast<uint8_t *>(Buffer.data()));
