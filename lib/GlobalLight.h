@@ -3,6 +3,7 @@
 
 
 #include "Light.h"
+#include "Ray.h"
 
 class GlobalLight : public Light {
 
@@ -11,7 +12,7 @@ public:
   GlobalLight(Color C) : C(C) {
   }
 
-  void processHit(Hit &H, const Level& L) const override {
+  void processHit(Hit &H, const Ray& View, const Level& L) const override {
     H.addLight(C);
   }
 };

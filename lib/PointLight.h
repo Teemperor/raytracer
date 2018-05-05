@@ -3,6 +3,7 @@
 
 
 #include "Light.h"
+#include "Ray.h"
 
 class PointLight : public Light {
   Vec3 Center;
@@ -11,7 +12,7 @@ class PointLight : public Light {
 public:
   PointLight(Vec3 Center, Vec3::Unit Radius) : Center(Center), Radius(Radius) {
   }
-  void processHit(Hit &H, const Level& L) const override;
+  void processHit(Hit &H, const Ray& View, const Level& L) const override;
 
   const Vec3 &getCenter() const {
     return Center;

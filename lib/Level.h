@@ -25,7 +25,7 @@ public:
   Hit intersectWithLight(const Ray &R, const Object *Ignore = nullptr) {
     Hit H = intersect(R, Ignore);
     if (H.valid())
-      lightHit(H);
+      lightHit(H, R);
     return H;
   }
 
@@ -71,7 +71,7 @@ public:
     return Result;
   }
 
-  void lightHit(Hit &H) const;
+  void lightHit(Hit &H, const Ray &View) const;
 
 };
 

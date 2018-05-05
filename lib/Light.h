@@ -5,12 +5,13 @@
 #include "Hit.h"
 
 class Level;
+class Ray;
 
 class Light {
 
 public:
   virtual ~Light() = default;
-  virtual void processHit(Hit &H, const Level& L) const = 0;
+  virtual void processHit(Hit &H, const Ray& View, const Level& L) const = 0;
 };
 
 

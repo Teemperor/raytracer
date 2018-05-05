@@ -53,7 +53,6 @@ int main()
 
   PointLight *Light;
   L.add(Light = new PointLight(Vec3(70, 70, 570), 1888));
-  L.add(new PointLight(Vec3(111, -300, 270), 888));
   L.add(new GlobalLight(Color(77, 77, 77)));
 
   Raytracer Tracer(L);
@@ -70,14 +69,11 @@ int main()
     const int Height = window.getSize().y;
 
     Vec3 V = Vec3(std::cos(Counter) * 3800, std::sin(Counter) * 3800, 3800);
-    //Tracer.setPos(V);
+    Tracer.setPos(V);
     Vec3 ViewDirection = (-V).normalize();
+    Tracer.setViewDirection(ViewDirection);
 
-    Light->setCenter(Vec3(Counter * 300, 500, 1000));
-
-    //ViewDirection.setZ(std::cos(ViewAngle -= 0.05));
-
-    //Tracer.setViewDirection(ViewDirection);
+    //Light->setCenter(Vec3(Counter * 300, 500, 1000));
 
     std::vector<Color> Buffer;
 

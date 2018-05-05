@@ -26,6 +26,10 @@ public:
     }
   }
 
+  Vec3 mirrorAt(const Vec3& N) const {
+    return *this - N * 2.0 * (this->dot(N));
+  }
+
   Vec3 crossProduct(const Vec3 &B) const {
     return Vec3(Y * B.Z - Z * B.Y,
                 Z * B.X - X * B.Z,
