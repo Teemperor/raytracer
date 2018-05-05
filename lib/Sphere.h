@@ -37,11 +37,17 @@ public:
     S = std::sqrt(S);
 
     Vec3::Unit D1 = -LDotOC + S;
-    Vec3::Unit D2 = -LDotOC + S;
+    Vec3::Unit D2 = -LDotOC - S;
 
-    auto ClosestD = std::min(std::abs(D1), std::abs(D2));
+    auto HitPoint1 = D1 * L + O;
+    auto HitPoint2 = D2 * L + O;
 
-    auto HitPoint = ClosestD * L + O;
+    Vec3 HitPoint;
+    if (HitPoint1.distance(R.getStart()) < HitPoint2.distance(R.getStart()))
+      HitPoint = HitPoint1;
+    else
+      HitPoint = HitPoint2;
+
     auto Normal = HitPoint - Center;
     return Hit(HitPoint, Normal.normalize(), C, this);
   }
