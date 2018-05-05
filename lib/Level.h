@@ -22,6 +22,13 @@ public:
     Lights.push_back(L);
   }
 
+  Hit intersectWithLight(const Ray &R, const Object *Ignore = nullptr) {
+    Hit H = intersect(R, Ignore);
+    if (H.valid())
+      lightHit(H);
+    return H;
+  }
+
   Hit intersect(const Ray &R, const Object *Ignore = nullptr) const {
     Hit Result;
     for (auto &O : Objects) {

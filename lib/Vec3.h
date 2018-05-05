@@ -61,6 +61,9 @@ public:
     return Vec3(X - O.X, Y - O.Y, Z - O.Z);
   }
 
+  Vec3 operator-() const {
+    return Vec3(-X, -Y, -Z);
+  }
 
   Vec3 normalize() const {
     auto L = length();

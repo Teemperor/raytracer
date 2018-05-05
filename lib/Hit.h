@@ -10,7 +10,7 @@ class Hit {
   Vec3 Pos;
   Vec3 Normal;
   Color C;
-  Color Light;
+  Color Light = Color(0, 0, 0);
   const Object *Obj;
   bool Valid = false;
 
@@ -20,6 +20,7 @@ public:
       : Pos(Pos), Normal(Normal.normalize()), C(C), Obj(Obj) {
     Valid = true;
   }
+
   static Hit missed() {
     return Hit();
   }
@@ -37,7 +38,7 @@ public:
   }
 
   Color getFinalColor() const {
-    return C + Light;
+    return C * Light.asFactor();
   }
 
   const Vec3 &getPos() const {

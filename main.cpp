@@ -22,13 +22,15 @@ int main()
 //  L.add(new Circle(Vec3(0, 50, 50), Vec3(1, 0, 0), Color(0, 111, 0), 50));
 //  L.add(new Circle(Vec3(50, 0, 50), Vec3(0, 1, 0), Color(0, 0, 111), 50));
   L.add(new TextureRect(Vec3(20, 50, 50), Vec3(1, 0, 0), "test.png", 0.8f));
+
   L.add(new Mirror(Vec3(50, 10, 50), Vec3(0, 1, 0), {60, 60}));
+  L.add(new Rectangle(Vec3(50, 10.5f, 50), Vec3(0, 1, 0), Color(0, 0, 0), {62, 62}));
 
 
   std::vector<Sphere *> Spheres;
 
   const int Field = 1900;
-  for (int i = 0; i < 220; ++i) {
+  for (int i = 0; i < 52; ++i) {
     int X = rand() % Field - Field/2;
     int Y = rand() % Field - Field/2;
     int Rad = rand() % 100;
@@ -50,17 +52,16 @@ int main()
   L.add(new Plane(Vec3(0, 0, 0), Vec3(0, 0, 1), Color(200, 20, 0)));
 
   PointLight *Light;
-  L.add(Light = new PointLight(Vec3(70, 70, 570), 88));
+  L.add(Light = new PointLight(Vec3(70, 70, 570), 1888));
+  L.add(new PointLight(Vec3(111, -300, 270), 888));
   L.add(new GlobalLight(Color(77, 77, 77)));
 
   Raytracer Tracer(L);
-  Tracer.setPos(Vec3(3800, 3800, 3800));
+  Tracer.setPos(Vec3(3000, 3000, 3000));
+  Tracer.setViewDirection(Vec3(-1, -1, -1));
 
-  Vec3 ViewDirection(-1, -1, -1);
 
   double Counter = 0;
-
-  auto OrigLightX = Light->getCenter().getX();
 
   while (window.isOpen())
   {
@@ -68,15 +69,15 @@ int main()
     const int Width = window.getSize().x;
     const int Height = window.getSize().y;
 
-    {
-      auto P = Light->getCenter();
-      P.setX(OrigLightX + std::cos(Counter) * 20);
-      Light->setCenter(P);
-    }
+    Vec3 V = Vec3(std::cos(Counter) * 3800, std::sin(Counter) * 3800, 3800);
+    //Tracer.setPos(V);
+    Vec3 ViewDirection = (-V).normalize();
+
+    Light->setCenter(Vec3(Counter * 300, 500, 1000));
 
     //ViewDirection.setZ(std::cos(ViewAngle -= 0.05));
 
-    Tracer.setViewDirection(ViewDirection);
+    //Tracer.setViewDirection(ViewDirection);
 
     std::vector<Color> Buffer;
 

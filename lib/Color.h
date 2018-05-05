@@ -34,6 +34,10 @@ public:
                  clamp((int)B + (int)C.B), A);
   }
 
+  float asFactor() const {
+    return R / 255.0f;
+  }
+
   uint8_t getAlpha() const {
     return A;
   }

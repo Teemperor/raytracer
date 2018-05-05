@@ -61,9 +61,8 @@ public:
           const Vec3 DirectionToPixel = ToTargetCenter + LeftFromTarget * XP + UpFromTarget * YP;
 
           Ray R(Pos, DirectionToPixel.normalize());
-          Hit H = L.intersect(R);
+          Hit H = L.intersectWithLight(R);
           if (H.valid()) {
-            L.lightHit(H);
             Buffer[x + y * Width] = H.getFinalColor();
           }
         }
