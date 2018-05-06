@@ -24,7 +24,7 @@ int main()
 //  L.add(new Circle(Vec3(50, 0, 50), Vec3(0, 1, 0), Color(0, 0, 111), 50));
   L.add(new TextureRect(Vec3(20, 50, 440), Vec3(1, 0, 0), "test.png", 0.3));
 
-  L.add(new Mirror(Vec3(20, 50, 440), Vec3(0, 1, 0), {360, 360}));
+  L.add(new Mirror(Vec3(20, 150, 440), Vec3(0, 1, 0), {360, 360}));
   //L.add(new Rectangle(Vec3(50, 10.5f, 50), Vec3(0, 1, 0), Color(0, 0, 0), {62, 62}));
 
 
@@ -62,6 +62,8 @@ int main()
 
   double Counter = 0;
 
+  int SSFactor = 3;
+
   while (window.isOpen())
   {
     Counter += 0.1f;
@@ -78,7 +80,7 @@ int main()
     //Light->setCenter(Vec3(Counter * 300, 500, 1000));
 
     Tracer.setRenderSize(Width, Height);
-    Tracer.setSuperSamplingSize(Width * 1, Height * 1);
+    Tracer.setSuperSamplingSize(Width * SSFactor, Height * SSFactor);
     Tracer.render();
 
     sf::Image Img;
