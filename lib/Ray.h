@@ -1,24 +1,26 @@
 #ifndef RAYTRACER_RAY_H
 #define RAYTRACER_RAY_H
 
+#include <cassert>
 #include "Vec3.h"
 #include "Color.h"
 
 class Ray {
   Vec3 Start;
   Vec3 Direction;
-  bool WantsColor = true;
+  unsigned Limit;
 public:
-  Ray(Vec3 Start, Vec3 Direction) : Start(Start),
-                                    Direction(Direction.normalize()) {
+  Ray(Vec3 Start, Vec3 Direction, unsigned Limit)
+      : Start(Start), Direction(Direction.normalize()), Limit(Limit) {
   }
 
-  void disableColor() {
-    WantsColor = false;
+  bool reachedRayLimit() const {
+    return Limit == 0;
   }
 
-  bool wantsColor() const {
-    return WantsColor;
+  unsigned getNext() const {
+    assert(!reachedRayLimit());
+    return Limit - 1;
   }
 
   const Vec3 &getStart() const {

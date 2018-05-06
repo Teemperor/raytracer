@@ -26,13 +26,11 @@ Hit TextureRect::intersect(const Ray &R, const Level &L) const {
     if (I.getColor().getAlpha() <= 0) {
       return Hit::missed();
     } else if (I.getColor().getAlpha() != 255) {
-      if (R.wantsColor()) {
-        Ray Background(I.getPos(), R.getDirection());
-        Hit BackgroundHit = L.intersectWithLight(Background, this);
+      Ray Background(I.getPos(), R.getDirection(), R.getNext());
+      Hit BackgroundHit = L.intersectWithLight(Background, this);
 
-        I.setColor(BackgroundHit.getFinalColor().drawOver(I.getColor()));
-        return I;
-      }
+      I.setColor(BackgroundHit.getFinalColor().drawOver(I.getColor()));
+      return I;
     }
   }
   return I;

@@ -3,8 +3,7 @@
 #include "Level.h"
 
 void PointLight::processHit(Hit &H, const Ray& View, const Level& L) const {
-  Ray LightTrace(getCenter(), H.getPos() - getCenter());
-  LightTrace.disableColor();
+  Ray LightTrace(getCenter(), H.getPos() - getCenter(), View.getNext());
 
   const Hit BH = L.intersect(LightTrace);
   bool HitSamePoint = H.getPos().distance(BH.getPos()) < 2;

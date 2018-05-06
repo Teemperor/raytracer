@@ -23,6 +23,8 @@ class Raytracer {
   std::vector<Color> Buffer;
   std::vector<Color> SSBuffer;
 
+  unsigned RayLimit = 8;
+
   void renderSS();
 
   Color computeAverage(const std::vector<Color> &Samples) {

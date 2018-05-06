@@ -67,7 +67,7 @@ void Raytracer::renderSS() {
 
         const Vec3 DirectionToPixel = ToTargetCenter + LeftFromTarget * XP + UpFromTarget * YP;
 
-        Ray R(Pos, DirectionToPixel.normalize());
+        Ray R(Pos, DirectionToPixel.normalize(), RayLimit);
         Hit H = L.intersectWithLight(R);
         if (H.valid()) {
           SSBuffer[x + y * SSWidth] = H.getFinalColor();

@@ -30,6 +30,9 @@ public:
   }
 
   Hit intersect(const Ray &R, const Object *Ignore = nullptr) const {
+    if (R.reachedRayLimit())
+      return Hit::missed();
+
     Hit Result;
     for (auto &O : Objects) {
       if (O == Ignore)
