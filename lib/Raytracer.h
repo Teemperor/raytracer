@@ -14,15 +14,56 @@ class Raytracer {
   double FOV = 90;
 
   int Jobs = 1;
-  int Width = 1;
-  int Height = 1;
+  unsigned Width = 1;
+  unsigned Height = 1;
+
+  unsigned SSWidth = 1;
+  unsigned SSHeight = 1;
+
+  std::vector<Color> Buffer;
+  std::vector<Color> SSBuffer;
+
+  void renderSS();
+
+  Color computeAverage(const std::vector<Color> &Samples) {
+    int RSum = 0;
+    int GSum = 0;
+    int BSum = 0;
+    for (const Color &C : Samples) {
+      RSum += C.getR();
+      GSum += C.getG();
+      BSum += C.getB();
+    }
+    return Color(static_cast<uint8_t>(RSum / Samples.size()),
+                 static_cast<uint8_t>(GSum / Samples.size()),
+                 static_cast<uint8_t>(BSum / Samples.size()));
+  }
+
+  Color getSSPixel(int x, int y) {
+    x = std::max(0, std::min(x, (int) SSWidth - 1));
+    y = std::max(0, std::min(y, (int) SSHeight - 1));
+    return SSBuffer[x + y * SSWidth];
+  }
+
+  void sampleToBuffer();
 
 public:
   explicit Raytracer(Level &L);
 
-  void setRenderSize(int W, int H) {
+  void setRenderSize(unsigned W, unsigned H) {
     Width = W;
     Height = H;
+    Buffer.resize(Width * Height, Color(0, 0, 0));
+  }
+
+  void setSuperSamplingSize(unsigned W, unsigned H) {
+    SSWidth = W;
+    SSHeight = H;
+    SSBuffer.resize(SSWidth * SSHeight, Color(0, 0, 0));
+  }
+
+  const std::vector<Color> &getBuffer() const {
+    return Buffer;
   }
 
   void setPos(const Vec3 &P) {
@@ -33,39 +74,9 @@ public:
     Direction = D;
   }
 
-  void trace(std::vector<Color> &Buffer) {
-    auto DataPerJob = Buffer.size() / Jobs;
-    std::vector<std::thread *> Threads;
-
-    for (std::size_t Start = 0; Start < Buffer.size(); Start += DataPerJob) {
-      std::thread *T = new std::thread([this, Start, DataPerJob, &Buffer](){
-        for (std::size_t I = Start; I < Start + DataPerJob; ++I) {
-          int x = I % Width;
-          int y = I / Width;
-          const Vec3 TargetCenter = Pos + Direction.normalize() * 100;
-
-          const Vec3 ToTargetCenter = TargetCenter - Pos;
-          const Vec3 Up(0, 0, 1);
-
-          double XP = (x / (float) Width - 0.5f) * 20;
-          double YP = (y / (float) Height - 0.5f) * 20;
-
-          const Vec3 LeftFromTarget = Up.crossProduct(ToTargetCenter).normalize();
-          const Vec3 UpFromTarget = LeftFromTarget.crossProduct(ToTargetCenter).normalize();
-
-          const Vec3 DirectionToPixel = ToTargetCenter + LeftFromTarget * XP + UpFromTarget * YP;
-
-          Ray R(Pos, DirectionToPixel.normalize());
-          Hit H = L.intersectWithLight(R);
-          if (H.valid()) {
-            Buffer[x + y * Width] = H.getFinalColor();
-          }
-        }
-      });
-      Threads.push_back(T);
-    }
-    for (auto &T : Threads)
-      T->join();
+  void render() {
+    renderSS();
+    sampleToBuffer();
   }
 };
 

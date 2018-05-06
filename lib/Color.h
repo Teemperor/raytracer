@@ -47,6 +47,18 @@ public:
     return A / 255.0;
   }
 
+  uint8_t getR() const {
+    return R;
+  }
+
+  uint8_t getG() const {
+    return G;
+  }
+
+  uint8_t getB() const {
+    return B;
+  }
+
   Color drawOver(const Color &Other) const {
     const int DR = Other.R - (int) R;
     const int DG = Other.G - (int) G;

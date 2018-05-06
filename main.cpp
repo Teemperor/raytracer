@@ -22,7 +22,7 @@ int main()
 //  L.add(new Circle(Vec3(50, 50, 0), Vec3(0, 0, 1), Color(111, 0, 0), 50));
 //  L.add(new Circle(Vec3(0, 50, 50), Vec3(1, 0, 0), Color(0, 111, 0), 50));
 //  L.add(new Circle(Vec3(50, 0, 50), Vec3(0, 1, 0), Color(0, 0, 111), 50));
-  L.add(new TextureRect(Vec3(20, 50, 440), Vec3(1, 0, 0), "test.png", 1));
+  L.add(new TextureRect(Vec3(20, 50, 440), Vec3(1, 0, 0), "test.png", 0.3));
 
   //L.add(new Mirror(Vec3(50, 10, 50), Vec3(0, 1, 0), {60, 60}));
   //L.add(new Rectangle(Vec3(50, 10.5f, 50), Vec3(0, 1, 0), Color(0, 0, 0), {62, 62}));
@@ -68,21 +68,21 @@ int main()
     const int Width = window.getSize().x;
     const int Height = window.getSize().y;
 
-    Vec3 V = Vec3(std::cos(Counter) * 3800, std::sin(Counter) * 3800, 3800);
+    Vec3 V = Vec3(std::cos(Counter) * 3800,
+                  std::sin(Counter) * 3800,
+                  3800);
     Tracer.setPos(V);
     Vec3 ViewDirection = (-V).normalize();
     Tracer.setViewDirection(ViewDirection);
 
     //Light->setCenter(Vec3(Counter * 300, 500, 1000));
 
-    std::vector<Color> Buffer;
-
-    Buffer.resize(Width * Height, Color(0, 0, 0));
     Tracer.setRenderSize(Width, Height);
-    Tracer.trace(Buffer);
+    Tracer.setSuperSamplingSize(Width * 2, Height * 2);
+    Tracer.render();
 
     sf::Image Img;
-    Img.create(Width, Height, reinterpret_cast<uint8_t *>(Buffer.data()));
+    Img.create(Width, Height, reinterpret_cast<const uint8_t *>(Tracer.getBuffer().data()));
 
     sf::Texture texture;
     texture.loadFromImage(Img);
