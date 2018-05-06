@@ -18,12 +18,22 @@ public:
     return X * Other.X + Y * Other.Y + Z * Other.Z;
   }
 
+  Unit angleBetween(const Vec3 &Other) const {
+    return std::acos(normalize().dot(Other.normalize()));
+  }
+
   Vec3 getRandomOther() const {
     if (std::abs(normalize().getX() - 1) < 0.1f) {
       return Vec3(0, 1, 0);
     } else {
       return Vec3(1, 0, 0);
     }
+  }
+
+  Vec3 rotateAround(const Vec3 &K, Vec3::Unit Angle) const {
+    // Rodrigues' rotation formula
+    return *this * std::cos(Angle) + (K.crossProduct(*this)) * std::sin(Angle)
+        + K * (K.dot(*this)) * (1 - std::cos(Angle));
   }
 
   Vec3 mirrorAt(const Vec3& N) const {
@@ -55,6 +65,10 @@ public:
 
   Vec3 operator*(const Unit& F) const {
     return Vec3(X * F, Y * F, Z * F);
+  }
+
+  Vec3 operator/(const Unit& F) const {
+    return Vec3(X / F, Y / F, Z / F);
   }
 
   Vec3 operator+(const Vec3& O) const {
@@ -102,6 +116,10 @@ public:
 
 inline Vec3 operator*(Vec3::Unit F, const Vec3 &A) {
   return A * F;
+}
+
+inline Vec3 operator/(Vec3::Unit F, const Vec3 &A) {
+  return A / F;
 }
 
 #endif //RAYTRACER_VEC3_H

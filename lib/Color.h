@@ -3,6 +3,7 @@
 
 
 #include <cstdint>
+#include <algorithm>
 
 class Color {
   uint8_t R, G, B, A;
@@ -40,6 +41,23 @@ public:
 
   uint8_t getAlpha() const {
     return A;
+  }
+
+  double getAlphaPercentage() const {
+    return A / 255.0;
+  }
+
+  Color drawOver(const Color &Other) const {
+    const int DR = Other.R - (int) R;
+    const int DG = Other.G - (int) G;
+    const int DB = Other.B - (int) B;
+
+    double Strength = Other.getAlphaPercentage();
+
+    return Color(static_cast<uint8_t>(clamp(R + DR * Strength)),
+                 static_cast<uint8_t>(clamp(G + DG * Strength)),
+                 static_cast<uint8_t>(clamp(B + DB * Strength)),
+                 std::max(A, Other.A));
   }
 };
 

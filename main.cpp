@@ -1,5 +1,6 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <cstdlib>
 #include "lib/Color.h"
 #include "lib/Level.h"
 #include "lib/Circle.h"
@@ -21,10 +22,10 @@ int main()
 //  L.add(new Circle(Vec3(50, 50, 0), Vec3(0, 0, 1), Color(111, 0, 0), 50));
 //  L.add(new Circle(Vec3(0, 50, 50), Vec3(1, 0, 0), Color(0, 111, 0), 50));
 //  L.add(new Circle(Vec3(50, 0, 50), Vec3(0, 1, 0), Color(0, 0, 111), 50));
-  L.add(new TextureRect(Vec3(20, 50, 50), Vec3(1, 0, 0), "test.png", 0.8f));
+  L.add(new TextureRect(Vec3(20, 50, 440), Vec3(1, 0, 0), "test.png", 1));
 
-  L.add(new Mirror(Vec3(50, 10, 50), Vec3(0, 1, 0), {60, 60}));
-  L.add(new Rectangle(Vec3(50, 10.5f, 50), Vec3(0, 1, 0), Color(0, 0, 0), {62, 62}));
+  //L.add(new Mirror(Vec3(50, 10, 50), Vec3(0, 1, 0), {60, 60}));
+  //L.add(new Rectangle(Vec3(50, 10.5f, 50), Vec3(0, 1, 0), Color(0, 0, 0), {62, 62}));
 
 
   std::vector<Sphere *> Spheres;
@@ -52,13 +53,12 @@ int main()
   L.add(new Plane(Vec3(0, 0, 0), Vec3(0, 0, 1), Color(200, 20, 0)));
 
   PointLight *Light;
-  L.add(Light = new PointLight(Vec3(70, 70, 570), 1888));
+  L.add(Light = new PointLight(Vec3(370, 70, 722), 1888));
   L.add(new GlobalLight(Color(77, 77, 77)));
 
   Raytracer Tracer(L);
   Tracer.setPos(Vec3(3000, 3000, 3000));
   Tracer.setViewDirection(Vec3(-1, -1, -1));
-
 
   double Counter = 0;
 

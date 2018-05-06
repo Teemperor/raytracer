@@ -13,17 +13,12 @@ class Raytracer {
   Vec3 Direction = Vec3(1, 0, 0);
   double FOV = 90;
 
-  int Jobs;
+  int Jobs = 1;
   int Width = 1;
   int Height = 1;
 
 public:
-  explicit Raytracer(Level &L) : L(L) {
-    Jobs = std::thread::hardware_concurrency();
-    --Jobs;
-    if (Jobs <= 0)
-      Jobs = 1;
-  }
+  explicit Raytracer(Level &L);
 
   void setRenderSize(int W, int H) {
     Width = W;

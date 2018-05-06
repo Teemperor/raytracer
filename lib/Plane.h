@@ -29,7 +29,6 @@ public:
     return Normal;
   }
 
-
   Hit intersect(const Ray &R, const Level &L) const override {
     // get d value
     Vec3::Unit d = Normal.dot(Coordinate);

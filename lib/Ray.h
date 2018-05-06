@@ -7,9 +7,18 @@
 class Ray {
   Vec3 Start;
   Vec3 Direction;
+  bool WantsColor = true;
 public:
   Ray(Vec3 Start, Vec3 Direction) : Start(Start),
                                     Direction(Direction.normalize()) {
+  }
+
+  void disableColor() {
+    WantsColor = false;
+  }
+
+  bool wantsColor() const {
+    return WantsColor;
   }
 
   const Vec3 &getStart() const {
